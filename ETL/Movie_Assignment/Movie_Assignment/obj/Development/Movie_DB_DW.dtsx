@@ -1,0 +1,1471 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/13/2022 7:48:12 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="KOBIGAN"
+  DTS:CreatorName="KOBIGAN\kobig"
+  DTS:DTSID="{79ACA95F-8B87-411A-B927-FCEB20C42186}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{F37B4505-5F01-4CD7-B49F-C4C2780C6763}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[KOBIGAN.Movie_DB_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DF456C14-7FCD-40B7-B6E0-E6D7691A1609}"
+      DTS:ObjectName="KOBIGAN.Movie_DB_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=KOBIGAN;Initial Catalog=Movie_DB_DW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{74022869-BB58-41B1-94C8-0812F86F0372}"
+      DTS:ObjectName="KOBIGAN.Movie_DB_Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=KOBIGAN;Initial Catalog=Movie_DB_Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Transform and load data from Movies Staging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{23B9718B-01DC-470E-93A4-6AE26E52D81A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Transform and load data from Movies Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Extract from Links Staging"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Extract from Links Staging"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgLinks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[movieId]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[movieId]"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[imdbId]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[imdbId]"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[imdbId]"
+                      name="imdbId"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[tmdbId]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[tmdbId]"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[tmdbId]"
+                      name="tmdbId"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[movieId]"
+                      dataType="numeric"
+                      name="movieId"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[imdbId]"
+                      dataType="numeric"
+                      name="imdbId"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].ExternalColumns[tmdbId]"
+                      dataType="numeric"
+                      name="tmdbId"
+                      precision="18" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[movieId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[imdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[imdbId]"
+                      name="imdbId"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[tmdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[tmdbId]"
+                      name="tmdbId"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Extract from Movies Staging"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgMovies]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[movieId]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[movieId]"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[title]"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[title]"
+                      name="title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[genres]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[genres]"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[genres]"
+                      name="genres"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[movieId]"
+                      dataType="numeric"
+                      name="movieId"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[title]"
+                      dataType="wstr"
+                      length="200"
+                      name="title" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].ExternalColumns[genres]"
+                      dataType="wstr"
+                      length="200"
+                      name="genres" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[movieId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[title]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[title]"
+                      name="title" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[genres]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[genres]"
+                      name="genres" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Links sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Links sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Transform and load data from Movies Staging\Links sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Inputs[Sort Input].Columns[movieId]"
+                      cachedDataType="numeric"
+                      cachedName="movieId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[movieId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Inputs[Sort Input].Columns[imdbId]"
+                      cachedDataType="numeric"
+                      cachedName="imdbId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[imdbId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Inputs[Sort Input].Columns[tmdbId]"
+                      cachedDataType="numeric"
+                      cachedName="tmdbId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[tmdbId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[movieId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[movieId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[imdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[imdbId]"
+                      name="imdbId"
+                      precision="18">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[imdbId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[tmdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[tmdbId]"
+                      name="tmdbId"
+                      precision="18">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output].Columns[tmdbId]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[movieId]"
+                      cachedDataType="numeric"
+                      cachedName="movieId"
+                      cachedPrecision="18"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[movieId]" />
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[title]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="title"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[title]" />
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[genres]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="genres"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[genres]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input].Columns[movieId]"
+                      cachedDataType="numeric"
+                      cachedName="movieId"
+                      cachedPrecision="18"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[movieId]" />
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input].Columns[imdbId]"
+                      cachedDataType="numeric"
+                      cachedName="imdbId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[imdbId]" />
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input].Columns[tmdbId]"
+                      cachedDataType="numeric"
+                      cachedName="tmdbId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output].Columns[tmdbId]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output]"
+                  isSorted="true"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[movieId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[movieId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[title]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[title]"
+                      name="title">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[title]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[genres]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[genres]"
+                      name="genres">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input].Columns[genres]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[imdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[imdbId]"
+                      name="imdbId"
+                      precision="18">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input].Columns[imdbId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[tmdbId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output].Columns[tmdbId]"
+                      name="tmdbId"
+                      precision="18">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input].Columns[tmdbId]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Movies SCD"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Movies SCD"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.UInt32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Connections[LookupConnection]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies SCD.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Movies Staging\Movies sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Movies sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Transform and load data from Movies Staging\Movies sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Inputs[Sort Input].Columns[movieId]"
+                      cachedDataType="numeric"
+                      cachedName="movieId"
+                      cachedPrecision="18"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[movieId]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Inputs[Sort Input].Columns[title]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="title"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[title]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Inputs[Sort Input].Columns[genres]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="genres"
+                      lineageId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[genres]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[movieId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[movieId]"
+                      name="movieId"
+                      precision="18"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[movieId]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[title]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[title]"
+                      name="title">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[title]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[genres]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output].Columns[genres]"
+                      name="genres">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output].Columns[genres]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Transform and load data from Movies Staging.Paths[Merge Join Output]"
+              endId="Package\Transform and load data from Movies Staging\Movies SCD.Inputs[Slowly Changing Dimension Input]"
+              name="Merge Join Output"
+              startId="Package\Transform and load data from Movies Staging\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\Transform and load data from Movies Staging.Paths[OLE DB Source Output]"
+              endId="Package\Transform and load data from Movies Staging\Movies sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\Transform and load data from Movies Staging\Extract from Movies Staging.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Transform and load data from Movies Staging.Paths[OLE DB Source Output1]"
+              endId="Package\Transform and load data from Movies Staging\Links sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\Transform and load data from Movies Staging\Extract from Links Staging.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Transform and load data from Movies Staging.Paths[Sort Output]"
+              endId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\Transform and load data from Movies Staging\Movies sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\Transform and load data from Movies Staging.Paths[Sort Output1]"
+              endId="Package\Transform and load data from Movies Staging\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\Transform and load data from Movies Staging\Links sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Transform and load data from Tags Staging"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2BAAC751-3374-4403-AC86-11C60EE71ED6}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Transform and load data from Tags Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Transform and load data from Tags Staging\Extract from tags staging"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Extract from tags staging"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgTags]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[KOBIGAN.Movie_DB_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tagId]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].ExternalColumns[tagId]"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tagId]"
+                      name="tagId"
+                      precision="18"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tag]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].ExternalColumns[tag]"
+                      length="100"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tag]"
+                      name="tag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].ExternalColumns[tagId]"
+                      dataType="numeric"
+                      name="tagId"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].ExternalColumns[tag]"
+                      dataType="wstr"
+                      length="100"
+                      name="tag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[tagId]"
+                      dataType="numeric"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[tagId]"
+                      name="tagId"
+                      precision="18" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[tag]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[tag]"
+                      name="tag" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform and load data from Tags Staging\Load DimTags"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Load DimTags"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">exec dbo.UpdateDimTags ?,?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform and load data from Tags Staging\Load DimTags.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[KOBIGAN.Movie_DB_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[KOBIGAN.Movie_DB_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].Columns[tagId]"
+                      cachedDataType="numeric"
+                      cachedName="tagId"
+                      cachedPrecision="18"
+                      externalMetadataColumnId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].ExternalColumns[@tagId]"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tagId]" />
+                    <inputColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].Columns[tag]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="tag"
+                      externalMetadataColumnId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].ExternalColumns[@tag]"
+                      lineageId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output].Columns[tag]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].ExternalColumns[@tagId]"
+                      dataType="i4"
+                      name="@tagId">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input].ExternalColumns[@tag]"
+                      dataType="wstr"
+                      length="100"
+                      name="@tag">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform and load data from Tags Staging\Load DimTags.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Transform and load data from Tags Staging.Paths[OLE DB Source Output]"
+              endId="Package\Transform and load data from Tags Staging\Load DimTags.Inputs[OLE DB Command Input]"
+              name="OLE DB Source Output"
+              startId="Package\Transform and load data from Tags Staging\Extract from tags staging.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="284,41.6"
+          Id="Package\Transform and load data from Tags Staging"
+          TopLeft="90.7142872591409,43.5882359054262" />
+        <NodeLayout
+          Size="294.4,41.6"
+          Id="Package\Transform and load data from Movies Staging"
+          TopLeft="147.142859648685,149.117649150142" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Transform and load data from Tags Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196.8,41.6"
+          Id="Package\Transform and load data from Tags Staging\Extract from tags staging"
+          TopLeft="62.8571439275937,154.470590401686" />
+        <NodeLayout
+          Size="145.6,41.6"
+          Id="Package\Transform and load data from Tags Staging\Load DimTags"
+          TopLeft="395.00000672681,162.117649332462" />
+        <EdgeLayout
+          Id="Package\Transform and load data from Tags Staging.Paths[OLE DB Source Output]"
+          TopLeft="259.657143927594,179.094119867074">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="135.342862799217,0"
+              Start="0,0"
+              End="127.842862799217,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="127.842862799217,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transform and load data from Tags Staging\Extract from tags staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Transform and load data from Movies Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="210.4,41.6"
+          Id="Package\Transform and load data from Movies Staging\Extract from Movies Staging"
+          TopLeft="167,35" />
+        <NodeLayout
+          Size="202.4,41.6"
+          Id="Package\Transform and load data from Movies Staging\Extract from Links Staging"
+          TopLeft="490,37" />
+        <NodeLayout
+          Size="132,41.6"
+          Id="Package\Transform and load data from Movies Staging\Movies sort"
+          TopLeft="207,137" />
+        <NodeLayout
+          Size="123.2,41.6"
+          Id="Package\Transform and load data from Movies Staging\Links sort"
+          TopLeft="533,128.6" />
+        <EdgeLayout
+          Id="Package\Transform and load data from Movies Staging.Paths[OLE DB Source Output]"
+          TopLeft="272.6,76.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.4"
+              Start="0,0"
+              End="0,52.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Transform and load data from Movies Staging.Paths[OLE DB Source Output1]"
+          TopLeft="592.9,78.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Transform and load data from Movies Staging\Merge Join"
+          TopLeft="377,234" />
+        <EdgeLayout
+          Id="Package\Transform and load data from Movies Staging.Paths[Sort Output]"
+          TopLeft="273,178.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="168.8,55.4"
+              Start="0,0"
+              End="168.8,47.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.7"
+                    Point2="0,27.7"
+                    Point3="4,27.7" />
+                  <mssgle:LineSegment
+                    End="164.8,27.7" />
+                  <mssgle:CubicBezierSegment
+                    Point1="164.8,27.7"
+                    Point2="168.8,27.7"
+                    Point3="168.8,31.7" />
+                  <mssgle:LineSegment
+                    End="168.8,47.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Transform and load data from Movies Staging.Paths[Sort Output1]"
+          TopLeft="594.6,170.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-132.533333333333,63.8"
+              Start="0,0"
+              End="-132.533333333333,56.3">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.8131707317073" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.8131707317073"
+                    Point2="0,37.8131707317073"
+                    Point3="-4,37.8131707317073" />
+                  <mssgle:LineSegment
+                    End="-128.533333333333,37.8131707317073" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-128.533333333333,37.8131707317073"
+                    Point2="-132.533333333333,37.8131707317073"
+                    Point3="-132.533333333333,41.8131707317073" />
+                  <mssgle:LineSegment
+                    End="-132.533333333333,56.3" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="133.6,41.6"
+          Id="Package\Transform and load data from Movies Staging\Movies SCD"
+          TopLeft="375,323" />
+        <EdgeLayout
+          Id="Package\Transform and load data from Movies Staging.Paths[Merge Join Output]"
+          TopLeft="441.8,275.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.4"
+              Start="0,0"
+              End="0,39.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transform and load data from Movies Staging\Extract from Movies Staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Transform and load data from Movies Staging\Extract from Links Staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

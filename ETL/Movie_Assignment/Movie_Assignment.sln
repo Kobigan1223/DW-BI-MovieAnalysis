@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Movie_Assignment", "Movie_Assignment\Movie_Assignment.dtproj", "{DAED609E-8153-42F8-99FB-46E37D550ED2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAED609E-8153-42F8-99FB-46E37D550ED2}.Development|Default.ActiveCfg = Development
+		{DAED609E-8153-42F8-99FB-46E37D550ED2}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD7A10F9-1087-4D1B-81F2-3D1D6CAA1454}
+	EndGlobalSection
+EndGlobal
